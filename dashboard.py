@@ -35,18 +35,42 @@ month = st.sidebar.selectbox("Selecione o mês", df['Month'].unique()) # selecio
 
 df_filtered = df[df["Month"] == month] # filtrando o mes
 
-df_filtered
+#df_filtered
 
 col1, col2 = st.columns(2)
 col3, col4, col5 = st.columns(3)
 
 
-fig_date = px.bar(df_filtered, x="Date", y="Total", color="Branch", barmode="group", title="Faturamento por dia")
-
+fig_date = px.bar(df_filtered, x="Date", y="Total", color="City", barmode="group", 
+                  title="Faturamento por dia")
 col1.plotly_chart(fig_date, use_container_width=True)
 
 
 
+fig_prod = px.bar(df_filtered, x="Date", y="Product line", color="City", barmode="group", 
+                  title="Faturamento por tipo de produto", orientation='h')
+col2.plotly_chart(fig_prod, use_container_width=True)
+
+city_total = df_filtered.groupby("City")["Total"].sum().reset_index() # selecionando o mes
+
+
+fig_city = px.bar(df_filtered, x="City", y="Product line", barmode="group", 
+                  title="Faturamento por filial", orientation='h')
+col3.plotly_chart(fig_city, use_container_width=True)
+
+
+city_total = df_filtered.groupby("City")["Rating"].mean().reset_index() # selecionando o mes
+fig_kind = px.pie(df_filtered, values="Total", names="Payment", 
+                  title="Faturamento por tipo de pagamento")
+col4.plotly_chart(fig_kind, use_container_width=True)
+
+
+
+city_total = df_filtered.groupby("City")["Rating"].mean().reset_index() # selecionando o mes
+fig_rating = px.bar(df_filtered, y="Rating", x="City", 
+                  title="Avaliação")
+
+col5.plotly_chart(fig_rating, use_container_width=True)
 
 
 
