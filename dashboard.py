@@ -18,7 +18,6 @@ Perguntas a serem respondidas
 
 
 import streamlit as st
-import time
 import pandas as pd
 import plotly.express as px
 
